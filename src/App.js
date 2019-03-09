@@ -1,19 +1,25 @@
-import React, { Component, Fragment } from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  ScrollView
-} from "react-native";
+import React, {Component, Fragment} from 'react';
+import {Text, View, StyleSheet, TextInput, TouchableOpacity, ScrollView} from 'react-native';
+import './config/ReactotronConfig';
 
-import "./config/ReactotronConfig";
+import customerAction from '../src/storage/actions/customerAction';
 
 type Props = {};
 export default class App extends Component<Props> {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    const customerAct = new customerAction();
+    customerAct.saveCustomer({
+      custId: 1,
+      custName: 'Pedro',
+      address: 'Recife',
+      custImageAddress: 'http://hue',
+    });
+    const customerDetails = customerAct.retrieveAllCustomer();
+    // console.log(customerAct);
   }
 
   render() {
@@ -36,44 +42,44 @@ export default class App extends Component<Props> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
-    textAlign: "center",
-    margin: 10
+    textAlign: 'center',
+    margin: 10,
   },
   instructions: {
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 5
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
   },
   textInput: {
-    width: "80%",
+    width: '80%',
     height: 45,
-    backgroundColor: "#d3d3d3",
-    alignContent: "flex-end",
-    borderRadius: 3
+    backgroundColor: '#d3d3d3',
+    alignContent: 'flex-end',
+    borderRadius: 3,
   },
   button: {
-    backgroundColor: "#6c5ce7",
+    backgroundColor: '#6c5ce7',
     height: 45,
-    width: "10%",
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 3
+    width: '10%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 3,
   },
   buttonTitle: {
     fontSize: 18,
-    textAlign: "center",
-    fontWeight: "bold"
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   searchbox: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    marginTop: 15
-  }
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    marginTop: 15,
+  },
 });

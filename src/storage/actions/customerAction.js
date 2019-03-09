@@ -1,46 +1,53 @@
 // @flow
+import CustomerModel from '../models/customerModel';
+import type {CustomerModelTypeInterface} from '../models/customerModel';
 
 /**
- * Modelo de Cliente
- */
-export default class CustomerModel {
-  static getCustomerModelName() {
-    return CustomerModel.schema.name;
-  }
-
-  /**
-   * Recupera a classe
-   * @return {string} retorna primeira chave do cliente
-   */
-  static PrimaryKey() {
-    return CustomerModel.schema.primaryKey;
-  }
-
-  /**
-   * class {realm} schema
-   * @type {Object}
-   */
-  static schema = {
-    name: "customer",
-    primaryKey: "_id",
-
-    properties: {
-      _id: "int",
-      name: "string",
-      address: "string",
-      imageAddress: "string"
-    }
-  };
-}
-
-/**
- * Customer Model Flow Type
+ * Flow type of customerAction
  * @type {Object}
  */
+export type CustomerActionInterface = {
+  saveCustomer(customerResponseModel: CustomerModelTypeInterface): Promise<CustomerModel>,
+  retrieveAllCustomer(): CustomerModelTypeInterface,
+};
 
-export type CustomerModelTypeInterface = {
-  _id: Number,
-  name: string,
-  address: string,
-  imageAddress: string
+/**
+ * create customer realm action to save the customer data
+ * @param {Realm} realmInstance
+ * @return {Object}
+ */
+export default (realmInstance: any): CustomerActionInterface => {
+  return {
+    /**
+     * set the customer
+     * @param {any} customerResponse Customer response from server
+     * @return {Promise<CustomerModelTypeInterface>} created customer object
+     */
+    saveCustomer: (customerResponse: any): Promise<CustomerModel> => {
+      const {custId, custName, address, custImageAddress} = customerResponse;
+      return new Promise((resolve, reject) => {
+        try {
+          const customer: CustomerModelTypeInterface = {
+            _id: custId,
+            name: custName,
+            address: address,
+            imageAddress: custImageAddress,
+          };
+          realmInstance.write(() => {
+            const createdCustomer = realmInstance.create(CustomerModel.getCustomerModelName(), customer, true);
+            resolve(createdCustomer);
+          });
+        } catch (error) {
+          resolve(error);
+        }
+      });
+    },
+    /**
+     * Get the current customer detail
+     * @return {CustomerModelTypeInterface}
+     */
+    retrieveAllCustomer: (): CustomerModelTypeInterface => {
+      return realmInstance.objects(CustomerModel.getCustomerModelName());
+    },
+  };
 };
