@@ -1,16 +1,16 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
-
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View, ScrollView } from "react-native";
 const Realm = require("realm");
 import "./src/config/ReactotronConfig";
+
+const clientSchema = {
+  name: "Client",
+  properties: {
+    name: "string",
+    age: "int",
+    location: "string"
+  }
+};
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -21,27 +21,33 @@ export default class App extends Component<Props> {
 
   componentWillMount() {
     Realm.open({
-      schema: [{ name: "Dog", properties: { name: "string" } }]
-    }).then(realm => {
-      realm.write(() => {
-        realm.create("Dog", { name: "Rex" });
+      schema: [clientSchema],
+      deleteRealmIfMigrationNeeded: true,
+      schemaVersion: 1
+    })
+      .then(realm => {
+        console.tron.log("Ok até agora");
+        realm.write(() => {
+          const client = realm.create("Client", {
+            name: "Pedro",
+            age: 26,
+            location: "Recife",
+            street: "Santo Amaro"
+          });
+          console.tron.log(realm.objects("Client"));
+          this.setState({ realm: client });
+        });
+        realm.close();
+      })
+      .catch(error => {
+        console.tron.log(error);
       });
-      this.setState({ realm });
-      // let data = JSON.stringify(realm.objects("Dog"));
-      // data = JSON.parse(data);
-      // console.log(data);
-      console.tron.log(realm.objects("Dog"));
-    });
   }
 
   render() {
-    const info = this.state.realm
-      ? this.state.realm.objects("Dog")
-      : "Loading...";
-
     return (
       <ScrollView>
-        <Text style={styles.welcome}>{JSON.stringify(info)}</Text>
+        <Text style={styles.welcome}>Oi</Text>
       </ScrollView>
     );
   }
