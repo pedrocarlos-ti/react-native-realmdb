@@ -1,5 +1,13 @@
-import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View, ScrollView } from "react-native";
+import React, { Component, Fragment } from "react";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  ScrollView,
+  TouchableNativeFeedback
+} from "react-native";
 const Realm = require("realm");
 import "./src/config/ReactotronConfig";
 
@@ -46,9 +54,35 @@ export default class App extends Component<Props> {
 
   render() {
     return (
-      <ScrollView>
-        <Text style={styles.welcome}>Oi</Text>
-      </ScrollView>
+      <Fragment>
+        <TextInput style={styles.textInput} />
+        <TouchableNativeFeedback>
+          <Text>Ok</Text>
+        </TouchableNativeFeedback>
+        <ScrollView>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>OI</Text>
+        </ScrollView>
+      </Fragment>
     );
   }
 }
@@ -69,5 +103,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#333333",
     marginBottom: 5
+  },
+  textInput: {
+    width: "80%",
+    height: 45,
+    backgroundColor: "#6c5ce7",
+    alignSelf: "center",
+    top: 10
   }
 });
