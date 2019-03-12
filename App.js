@@ -6,7 +6,7 @@ import {
   TextInput,
   View,
   ScrollView,
-  TouchableNativeFeedback
+  TouchableOpacity
 } from "react-native";
 const Realm = require("realm");
 import "./src/config/ReactotronConfig";
@@ -53,33 +53,18 @@ export default class App extends Component<Props> {
   }
 
   render() {
+    const { realm } = this.state;
+    console.tron.log(typeof realm);
     return (
       <Fragment>
-        <TextInput style={styles.textInput} />
-        <TouchableNativeFeedback>
-          <Text>Ok</Text>
-        </TouchableNativeFeedback>
+        <View style={styles.searchbox}>
+          <TextInput style={styles.textInput} />
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonTitle}>OK</Text>
+          </TouchableOpacity>
+        </View>
         <ScrollView>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
-          <Text style={styles.welcome}>OI</Text>
+          {realm !== null ? <Text>Realmm</Text> : <Text>Tá Null</Text>}
           <Text style={styles.welcome}>OI</Text>
         </ScrollView>
       </Fragment>
@@ -108,7 +93,24 @@ const styles = StyleSheet.create({
     width: "80%",
     height: 45,
     backgroundColor: "#6c5ce7",
-    alignSelf: "center",
-    top: 10
+    alignContent: "flex-end"
+  },
+  button: {
+    backgroundColor: "#6c5ce7",
+    height: 45,
+    width: "10%",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  buttonTitle: {
+    fontSize: 18,
+    textAlign: "center",
+    fontWeight: "bold"
+  },
+  searchbox: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
+    marginTop: 15
   }
 });
