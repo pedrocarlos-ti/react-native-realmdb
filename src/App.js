@@ -1,60 +1,22 @@
 import React, { Component, Fragment } from "react";
 import {
-  Platform,
-  StyleSheet,
   Text,
-  TextInput,
   View,
-  ScrollView,
-  TouchableOpacity
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  ScrollView
 } from "react-native";
-const Realm = require("realm");
-import "./src/config/ReactotronConfig";
 
-const clientSchema = {
-  name: "Client",
-  properties: {
-    name: "string",
-    age: "int",
-    location: "string"
-  }
-};
+import "./config/ReactotronConfig";
 
 type Props = {};
 export default class App extends Component<Props> {
   constructor(props) {
     super(props);
-    this.state = { realm: null };
-  }
-
-  componentWillMount() {
-    Realm.open({
-      schema: [clientSchema],
-      deleteRealmIfMigrationNeeded: true,
-      schemaVersion: 1
-    })
-      .then(realm => {
-        console.tron.log("Ok até agora");
-        realm.write(() => {
-          const client = realm.create("Client", {
-            name: "Pedro",
-            age: 26,
-            location: "Recife",
-            street: "Santo Amaro"
-          });
-          console.tron.log(realm.objects("Client"));
-          this.setState({ realm: client });
-        });
-        realm.close();
-      })
-      .catch(error => {
-        console.tron.log(error);
-      });
   }
 
   render() {
-    const { realm } = this.state;
-    console.tron.log(typeof realm);
     return (
       <Fragment>
         <View style={styles.searchbox}>
@@ -64,8 +26,7 @@ export default class App extends Component<Props> {
           </TouchableOpacity>
         </View>
         <ScrollView>
-          {realm !== null ? <Text>Realmm</Text> : <Text>Tá Null</Text>}
-          <Text style={styles.welcome}>OI</Text>
+          <Text style={styles.welcome}>RealmDB</Text>
         </ScrollView>
       </Fragment>
     );
@@ -92,15 +53,17 @@ const styles = StyleSheet.create({
   textInput: {
     width: "80%",
     height: 45,
-    backgroundColor: "#6c5ce7",
-    alignContent: "flex-end"
+    backgroundColor: "#d3d3d3",
+    alignContent: "flex-end",
+    borderRadius: 3
   },
   button: {
     backgroundColor: "#6c5ce7",
     height: 45,
     width: "10%",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    borderRadius: 3
   },
   buttonTitle: {
     fontSize: 18,
